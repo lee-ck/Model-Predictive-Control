@@ -1,7 +1,3 @@
-% collision avoidance main
-% No_ballast_obstacle_avoidance_robust
-% W/O Terminal cost 
-
 %% Select type
 clc
 close all
@@ -35,9 +31,6 @@ plot(Map.WPT(:,1),Map.WPT(:,2),'ro','LineWidth',1)
 close
 end
 Map.acc_bd = 0.7;
-Map.WPT_max = size(Map.WPT,1);
-Map.AccRadi = 1;
-Map.prev_index = 1;
 Map.WPT_Now = 1;
 Map.WPT_max = size(Map.WPT,1);
 
@@ -67,14 +60,7 @@ while sim.time(end) < sim.simLength
     
     %% Waypoint change
     sim.cur_x = input.x0(1);  
-    if(norm(input.x0(1:2)-Map.WPT(Map.WPT_Now,:))<Map.AccRadi)
-            Map.WPT_Now = Map.WPT_Now+1;
-    end  
-    if Map.WPT_Now > Map.WPT_max
-        disp('Arrive fianl waypoint');
-        break;
-    end
-    
+
     %% Reference & Obstacle cost
     % CTE & LOS
     [input, sim] = Make_ref_car(Map,sim,input);
@@ -131,10 +117,7 @@ while sim.time(end) < sim.simLength
         DrawCircle(input.od(1,3*i-0),input.od(1,3*i-2),input.od(1,3*i-1),1)
     end   
     plot(Map.WPT(:,1),Map.WPT(:,2),'r','LineWidth',1)
-%     plot(Map.WPT(:,1),Map.WPT(:,2),'ro','LineWidth',0.5)
-%     plot(Map.WPT(:,1)',[Map.yboudary_lower Map.yboudary_lower],'k','LineWidth',1)
-%     plot(Map.WPT(:,1)',[Map.yboudary_upper Map.yboudary_upper],'k','LineWidth',1)
-    
+
     %plot trajectory 
     plot(sim.state(:,1),sim.state(:,2),'k','LineWidth',2)
     plot(sim.state(end,1),sim.state(end,2),'bo','LineWidth',3)
@@ -162,47 +145,6 @@ while sim.time(end) < sim.simLength
     for i = 1:sim.Num
         if mod(i,1) == 0
         a = Map.WPT(input.index(i,1)+1,:)-Map.WPT(input.index(i,1),:);
-%         if (abs(a(1)) < 0.00000001)
-%             a1 = a(2)/a(1);
-%             y1 = input.y(i,2)-slack_v:0.1:input.y(i,2)+slack_v;
-%             x1 = y1*0+input.y(i,1);
-%             x2 = y1*0+input.y(i,1)+acc_bd;
-%             x3 = y1*0+input.y(i,1)-acc_bd;
-%             plot(x1,y1,'r')
-%             plot(x2,y1,'r')
-%             plot(x3,y1,'r')
-%             
-%         elseif (abs(a(2)) < 0.00000001)
-%             a1 = a(2)/a(1);
-%             x1 = input.y(i,1)-slack_v:0.1:input.y(i,1)+slack_v;
-%             y1 = x1*0+input.y(i,2);
-%             y2 = x1*0+input.y(i,2)+acc_bd;
-%             y3 = x1*0+input.y(i,2)-acc_bd;                      
-%             plot(x1,y1,'r')
-%             plot(x1,y2,'r')
-%             plot(x1,y3,'r')
-%             
-%         else
-%             a1 = a(2)/a(1);
-%             x1 = input.y(i,1)-slack_v:0.1:input.y(i,1)+slack_v;
-%             y1 = a1*(x1-input.y(i,1))+input.y(i,2);            
-%             xx1 = input.y(i,1) + acc_bd*cos(atan(-1/a1));
-%             yy1 = input.y(i,2) + acc_bd*sin(atan(-1/a1));  
-%             xx2 = input.y(i,1) - acc_bd*cos(atan(-1/a1)); 
-%             yy2 = input.y(i,2) - acc_bd*sin(atan(-1/a1));
-%             x2 = xx1-slack_v:0.1:xx1+slack_v;
-%             x3 = xx2-slack_v:0.1:xx2+slack_v;
-%             y2 = a1*(x2-xx1)+yy1;
-%             y3 = a1*(x3-xx2)+yy2;
-%             plot(xx1,yy1,'co')
-%             plot(xx2,yy2,'co')
-% 
-% %             plot(x1,y1,'r')
-% %             plot(x2,y2,'r')
-% %             plot(x3,y3,'r')
-%             
-%         end
-
             a1 = a(2)/a(1);         
             xx1 = input.y(i,1) + Map.acc_bd*cos(atan(-1/a1));
             yy1 = input.y(i,2) + Map.acc_bd*sin(atan(-1/a1));  
@@ -237,8 +179,6 @@ axis equal
 %plot map
 plot(Map.WPT(:,1),Map.WPT(:,2),'r','LineWidth',1)
 plot(Map.WPT(:,1),Map.WPT(:,2),'ro','LineWidth',1)
-% plot(Map.WPT(:,1)',[Map.yboudary_lower Map.yboudary_lower],'k','LineWidth',1)
-% plot(Map.WPT(:,1)',[Map.yboudary_upper Map.yboudary_upper],'k','LineWidth',1)
 for i = 1: 5
     DrawCircle(input.od(1,3*i-0),input.od(1,3*i-2),input.od(1,3*i-1),1)
 end
