@@ -1,4 +1,3 @@
-%% Select type
 clc
 close all
 clear all
@@ -6,7 +5,6 @@ warning('off')
 
 addpath(genpath('./ACADO/'))
 addpath(genpath('./Func/'))
-% addpath(genpath('./Plot/'))
 
 sim.simLength = 160;  % Simulation time
 sim.Num = 50;        % Number of horizon
@@ -27,7 +25,6 @@ axis equal
 plot(Map.points(1,:),Map.points(2,:),'b','LineWidth',1)
 plot(Map.WPT(:,1),Map.WPT(:,2),'r','LineWidth',1)
 plot(Map.WPT(:,1),Map.WPT(:,2),'ro','LineWidth',1)
-% pause(2)
 close
 end
 Map.acc_bd = 0.7;
@@ -56,7 +53,6 @@ while sim.time(end) < sim.simLength
     input.x0 = sim.state(end,:);
     sim.iterNumth = 0;
     sim.timeElapsed = 0;  
-    
     
     %% Waypoint change
     sim.cur_x = input.x0(1);  
@@ -141,7 +137,6 @@ while sim.time(end) < sim.simLength
         plot(boundary1(:,1),boundary1(:,2),'m.')
         plot(boundary2(:,1),boundary2(:,2),'m.')
      
-        
     for i = 1:sim.Num
         if mod(i,1) == 0
         a = Map.WPT(input.index(i,1)+1,:)-Map.WPT(input.index(i,1),:);
@@ -164,7 +159,6 @@ while sim.time(end) < sim.simLength
             end
         end
     end
-    
     
     %plot output
     plot(output.x(:,1),output.x(:,2),'m','LineWidth',2)
