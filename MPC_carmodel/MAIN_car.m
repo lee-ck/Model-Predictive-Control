@@ -70,7 +70,7 @@ while sim.time(end) < sim.simLength
     input.od = real(input.od);
     while sim.iterNumth<sim.maxIterNum
         input = yaw_discontinuity(input);
-        output = ACADO_UUV_20sec50step_car(input);
+        output = ACADO_car(input);
         input.x = [output.x(2:end,:); output.x(end,:)];
         input.u = [output.u(2:end,:); output.u(end,:)];
         sim.iterNumth = sim.iterNumth + 1;
@@ -90,7 +90,7 @@ while sim.time(end) < sim.simLength
     %% Simulate system
     sim.input.x = sim.state(end,:).';
     sim.input.u = output.u(1,:).';
-    sim.states = integrate_UUV_20sec50step_car(sim.input);
+    sim.states = integrate_car(sim.input);
     % log 
     sim.state = [sim.state; sim.states.value'];
     sim.iter = sim.iter+1;
