@@ -1,21 +1,5 @@
 function  [Map,input,sim] = Make_online_data_car(Map,input,sim)   
 
-%%%%%%%   8 OnlineDatas %%%%%%%   
-% OnlineData cylinder_x
-% OnlineData cylinder_y
-% OnlineData cylinder_r
-% 
-% OnlineData cylinder2_x
-% OnlineData cylinder2_y
-% OnlineData cylinder2_r
-% 
-% OnlineData yboudary_lower
-% OnlineData yboudary_upper
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-
-
-%Map.obstacle = check_obstacle_inrange(sim,Map.obstacle);  % future work
-
 od = zeros(1,19);
 % Cylinder
 od(1) = 15;
