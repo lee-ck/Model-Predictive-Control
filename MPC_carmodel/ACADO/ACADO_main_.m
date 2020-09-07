@@ -1,10 +1,7 @@
 function  ACADO_main_
-% => 2 Dim
-% No ballast model  sphere wall cylinder floor avoidance w/o current
-% => Hard contstraints
 clear all
 
-simTs = 0.4;           % time interval              
+simTs = 0.4;                 
 Num = 50;
 EXPORT = 1;
 numSteps = 2;
