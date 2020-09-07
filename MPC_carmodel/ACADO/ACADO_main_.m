@@ -63,7 +63,6 @@ obs2+...
 obs3+...
 obs4+...
 obs5;
-% obs = 0;
 
 n_XD = length(diffStates);
 n_U = length(controls);
@@ -79,8 +78,8 @@ sim.set( 'INTEGRATOR_TYPE',             'INT_EX_EULER' );
 sim.set( 'NUM_INTEGRATOR_STEPS',         numSteps );
 EXPORT2 = 1;
 
-integrate_name = './../integrate_UUV_%dsec%dstep_car';
-ACADO_name = './../ACADO_UUV_%dsec%dstep_car';
+integrate_name = './../integrate_car';
+ACADO_name = './../ACADO_car';
 integrate_name = sprintf(integrate_name,Num*simTs,Num);
 ACADO_name = sprintf(ACADO_name,Num*simTs,Num);
 
@@ -116,10 +115,7 @@ ocp.subjectTo( sqrt((x-cylinder3_x)*(x-cylinder3_x)  + (y-cylinder3_y)*(y-cylind
 ocp.subjectTo( sqrt((x-cylinder4_x)*(x-cylinder4_x)  + (y-cylinder4_y)*(y-cylinder4_y)) - cylinder4_r >= 0 )
 ocp.subjectTo( sqrt((x-cylinder5_x)*(x-cylinder5_x)  + (y-cylinder5_y)*(y-cylinder5_y)) - cylinder5_r >= 0 )
 ocp.subjectTo( (yboudary_lower_a*x-y+yboudary_lower_c)*(yboudary_upper_a*x-y+yboudary_upper_c) <= 0 )
-
-
 ocp.setModel(f);
-
 
 mpc = acado.OCPexport( ocp );
 mpc.set( 'HESSIAN_APPROXIMATION',       'GAUSS_NEWTON'      );
@@ -129,10 +125,6 @@ mpc.set( 'INTEGRATOR_TYPE',             'INT_EX_EULER'      );
 mpc.set( 'CG_USE_OPENMP ',              'YES');
 mpc.set( 'NUM_INTEGRATOR_STEPS',         2*Num                  );
 mpc.set( 'LEVENBERG_MARQUARDT', 		 1e-4				);
-
-
-% mpc.set( 'CG_HARDCODE_CONSTRAINT_VALUES','NO' 				);
-
 
 switch solver_selection
     case 1
@@ -156,8 +148,6 @@ if EXPORT
         case 1
             disp('qpOASES exported!');
             copyfile('C:/Users/user/Desktop/ACADO/external_packages/qpoases','export_MPC/qpoases', 'f')
-%             copyfile('C:/Users/leeck/Desktop/ACADO/external_packages/qpoases','export_MPC/qpoases', 'f')
-
         case 2
             disp('QP_QPDUNES exported!');
             copyfile('../ACADO/external_packages/qpdunes', 'export_MPC/qpdunes', 'f')
@@ -168,6 +158,4 @@ if EXPORT
         make_acado_solver(ACADO_name)
     cd ..
 end
-
-
 end
