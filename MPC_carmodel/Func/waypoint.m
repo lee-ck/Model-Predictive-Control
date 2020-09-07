@@ -12,19 +12,7 @@ num = fix(a/target_dist);
 
 pp(:,1)=[];
 pp(:,end)=[];
-
-% plot(pp(1,:),pp(2,:),'b-')
-% hold on
-% axis equal
-% grid on
-% interpolate using parametric splines
 pt = interparc(num,pp(1,:),pp(2,:),'spline');
-% plot(pt(:,1),pt(:,2),'r.')
-
-
-% for i = 1:size(pt,1)-1
-% norm(pt(i+1,:)-pt(i,:))
-% end
 
 Map.WPT = pt;
 end
