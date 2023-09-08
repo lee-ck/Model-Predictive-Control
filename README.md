@@ -7,6 +7,8 @@ Vehicle visualization code reference: https://github.com/adrianomcr/skid_steerin
 
 ![Video](ver2.gif)
 
+![alt text](result_traj.pdf)
+
 ![alt text](result_traj.png)
 
 ver.1
